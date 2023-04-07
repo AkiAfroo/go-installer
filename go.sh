@@ -1,4 +1,18 @@
 #!/bin/bash
+BLACK=0
+RED=1
+GREEN=2
+YELLOW=3
+BLUE=4
+CYAN=6
+RESET=$(tput sgr0)
+TEXT_COLOR="tput setaf "
+BACKGROUND_COLOR="tput setab "
+CLEAR_UP="#tput cuu 1; tput ed;"
+
+version_regex="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
+VERSION_REGEX="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
+is_latest_version="yes"
 function what_platform() {
   os="$(uname -s)"
   arch="$(uname -m)"
