@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Color definitions for tput
 BLACK=0
 RED=1
@@ -15,16 +14,6 @@ CLEAR_UP="#tput cuu 1; tput ed;"
 version_regex="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 VERSION_REGEX="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 is_latest_version="yes"
-
-function print_welcome() {
-  echo -e "$($TEXT_COLOR $CYAN)
-\t  ____  ___       ___ _   _ ____ _____  _    _     _     _____ ____  
-\t / ___|/ _ \     |_ _| \ | / ___|_   _|/ \  | |   | |   | ____|  _ \ 
-\t| |  _| | | |_____| ||  \| \___ \ | | / _ \ | |   | |   |  _| | |_) |
-\t| |_| | |_| |_____| || |\  |___) || |/ ___ \| |___| |___| |___|  _ < 
-\t \____|\___/     |___|_| \_|____/ |_/_/   \_\_____|_____|_____|_| \_\\
-\t ${RESET}"
-}
 
 function print_help() {
   echo -e "\t$($TEXT_COLOR $BLUE)go.sh${RESET} is a tool that helps you easily install, update or uninstall Go\n
@@ -104,7 +93,6 @@ function go_exists() {
 function remove() {
   if ! go_exists; then
     echo "$($TEXT_COLOR $RED)Go is not installed!${RESET}"
-    exit
   fi
 
   what_shell_profile
@@ -116,7 +104,6 @@ function remove() {
     echo "Can't remove contents of $GOROOT"
     echo "Maybe you need to run the script with root privileges!"
     echo "sudo bash go.sh"
-    exit 1
   fi
 
   RC_PROFILE="$HOME/.${shell_profile}"
@@ -207,7 +194,6 @@ function update_go() {
   if [[ $current == "$latest" ]]; then
     echo "You already have that version of $($TEXT_COLOR $CYAN)Go${RESET} Installed!"
     echo "$($TEXT_COLOR $BLUE)Exiting, Bye!${RESET}"
-    exit
   fi
 
   echo "Installing will remove the current installed version from '$GOROOT'"
@@ -227,18 +213,15 @@ function update_go() {
     ;;
   N* | n*)
     echo "Okay, Bye!"
-    exit 0
     ;;
   *)
     echo "Wrong choice!"
-    exit 1
     ;;
   esac
 
 }
 
 function main() {
-  print_welcome
 
   if [[ $# == 1 ]]; then
     case $1 in
@@ -247,11 +230,9 @@ function main() {
       ;;
     "remove")
       remove
-      exit
       ;;
     *)
       print_help
-      exit
       ;;
     esac
   elif [[ $# == 2 ]]; then
@@ -262,12 +243,10 @@ function main() {
       ;;
     *)
       print_help
-      exit
       ;;
     esac
   elif [[ $# > 2 ]]; then
       print_help
-      exit
   fi
 
   what_platform
@@ -284,4 +263,4 @@ function main() {
   test_installation
 }
 
-main "$@"
+#main "$@"   
