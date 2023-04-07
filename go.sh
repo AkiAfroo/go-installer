@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# Color definitions for tput
 BLACK=0
 RED=1
 GREEN=2
@@ -13,6 +15,27 @@ CLEAR_UP="#tput cuu 1; tput ed;"
 version_regex="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 VERSION_REGEX="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 is_latest_version="yes"
+
+function print_welcome() {
+  echo -e "$($TEXT_COLOR $CYAN)
+\t  ____  ___       ___ _   _ ____ _____  _    _     _     _____ ____  
+\t / ___|/ _ \     |_ _| \ | / ___|_   _|/ \  | |   | |   | ____|  _ \ 
+\t| |  _| | | |_____| ||  \| \___ \ | | / _ \ | |   | |   |  _| | |_) |
+\t| |_| | |_| |_____| || |\  |___) || |/ ___ \| |___| |___| |___|  _ < 
+\t \____|\___/     |___|_| \_|____/ |_/_/   \_\_____|_____|_____|_| \_\\
+\t ${RESET}"
+}
+
+function print_help() {
+  echo -e "\t$($TEXT_COLOR $BLUE)go.sh${RESET} is a tool that helps you easily install, update or uninstall Go\n
+  \t$($TEXT_COLOR $GREEN)-------------------------------  Usage  -------------------------------\n
+  \t$($TEXT_COLOR $YELLOW)bash go.sh${RESET}\t\t\tInstalls or update Go (if installed)
+  \t$($TEXT_COLOR $YELLOW)bash go.sh --version [version]${RESET}\tInstalls a specific version of Go
+  \t$($TEXT_COLOR $YELLOW)bash go.sh remove${RESET}\t\tUninstalls the installed version of Go
+  \t$($TEXT_COLOR $YELLOW)bash go.sh help${RESET}\t\t\tPrints this help message
+  "
+}
+
 function what_platform() {
   os="$(uname -s)"
   arch="$(uname -m)"
@@ -215,7 +238,7 @@ function update_go() {
 }
 
 function main() {
- # print_welcome
+  print_welcome
 
   if [[ $# == 1 ]]; then
     case $1 in
@@ -227,7 +250,7 @@ function main() {
       exit
       ;;
     *)
-      #print_help
+      print_help
       exit
       ;;
     esac
@@ -243,7 +266,7 @@ function main() {
       ;;
     esac
   elif [[ $# > 2 ]]; then
-      #print_help
+      print_help
       exit
   fi
 
