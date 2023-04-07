@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 # Color definitions for tput
 BLACK=0
 RED=1
@@ -14,6 +15,20 @@ CLEAR_UP="#tput cuu 1; tput ed;"
 version_regex="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 VERSION_REGEX="[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]"
 is_latest_version="yes"
+
+# function print_welcome() {
+# echo -e "$($TEXT_COLOR $CYAN)
+# \t
+# \t
+# \t               ██████╗███████╗██╗     ███████╗
+# \t              ██╔════╝██╔════╝██║     ██╔════╝
+# \t              ██║     █████╗  ██║     █████╗
+# \t              ██║     ██╔══╝  ██║     ██╔══╝
+# \t              ╚██████╗███████╗███████╗███████╗
+# \t               ╚═════╝╚══════╝╚══════╝╚══════╝
+# \t
+# \t ${RESET}"
+# }
 
 function print_help() {
   echo -e "\t$($TEXT_COLOR $BLUE)go.sh${RESET} is a tool that helps you easily install, update or uninstall Go\n
@@ -123,11 +138,10 @@ function test_installation() {
 
   if [ $? -ne 0 ]; then
     echo "$($TEXT_COLOR $RED)Installation failed!!${RESET}"
-    exit 1
   fi
 
   echo "$($TEXT_COLOR $CYAN)Go${RESET} ($VERSION) has been installed $($TEXT_COLOR $GREEN)successfully!${RESET}"
-  echo "Open a new terminal(to re login) or you can do: $($TEXT_COLOR $YELLOW)source $HOME/.${shell_profile}${RESET}"
+  #echo "Open a new terminal(to re login) or you can do: $($TEXT_COLOR $YELLOW)source $HOME/.${shell_profile}${RESET}"
 }
 
 function install_go() {
@@ -193,7 +207,8 @@ function update_go() {
 
   if [[ $current == "$latest" ]]; then
     echo "You already have that version of $($TEXT_COLOR $CYAN)Go${RESET} Installed!"
-    echo "$($TEXT_COLOR $BLUE)Exiting, Bye!${RESET}"
+    echo ""
+   # echo "$($TEXT_COLOR $BLUE)Exiting, Bye!${RESET}"
   fi
 
   echo "Installing will remove the current installed version from '$GOROOT'"
@@ -222,6 +237,7 @@ function update_go() {
 }
 
 function main() {
+ # print_welcome
 
   if [[ $# == 1 ]]; then
     case $1 in
@@ -230,9 +246,11 @@ function main() {
       ;;
     "remove")
       remove
+      exit
       ;;
     *)
-      print_help
+      #print_help
+      exit
       ;;
     esac
   elif [[ $# == 2 ]]; then
@@ -242,11 +260,13 @@ function main() {
       is_latest_version="no"
       ;;
     *)
-      print_help
+     #print_help
+      exit
       ;;
     esac
   elif [[ $# > 2 ]]; then
-      print_help
+      #print_help
+      exit
   fi
 
   what_platform
@@ -263,4 +283,4 @@ function main() {
   test_installation
 }
 
-#main "$@"   
+main "$@"
