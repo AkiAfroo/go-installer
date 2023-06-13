@@ -1,4 +1,4 @@
-<h1 align="left">Go Installer 🐹
+<h1 align="left">Go Installer For Celestia Network 🐹
   <a target="_blank" href="https://kounter.tk">
     <img align="right" src="https://t.ly/qgt4" />
   </a>
